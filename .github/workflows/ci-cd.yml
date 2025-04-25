@@ -105,3 +105,20 @@ jobs:
       - run: |
           echo "Using production token: ${{ secrets.DEPLOY_TOKEN }}"
       - run: echo "✅ Production deployment done!" >> $GITHUB_STEP_SUMMARY
+  
+  auto-review:
+    if: github.event_name == 'pull_request' && github.actor == 'alice-sebego'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Auto-assign PR reviewer (yourself)
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-reviewer "${{ github.actor }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-approve pull request
+        uses: hmarr/auto-approve-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
