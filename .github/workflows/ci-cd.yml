@@ -107,11 +107,17 @@ jobs:
       - run: echo "✅ Production deployment done!" >> $GITHUB_STEP_SUMMARY
   
   auto-review:
-    if: github.event_name == 'pull_request' && github.actor == 'alice-sebego'
+    if: github.event_name == 'pull_request' && github.actor == 'ton-username'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize git repository
+        run: git init
+
       - name: Auto-assign PR reviewer (yourself)
         run: gh pr edit ${{ github.event.pull_request.number }} --add-reviewer "${{ github.actor }}"
         env:
@@ -121,4 +127,6 @@ jobs:
         uses: hmarr/auto-approve-action@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+
 
