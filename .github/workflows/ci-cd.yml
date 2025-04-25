@@ -77,9 +77,11 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - uses: actions/checkout@v4  # <--- ✅ Ajout essentiel ici
       - run: echo "🔁 Attempting auto-merge and release PR"
       - run: gh pr merge --auto --merge "${{ github.event.pull_request.number }}"
       - run: gh pr create --base main --head develop --title "Release to production" --body "Automated PR from develop to main"
+
 
   deploy-prod:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
