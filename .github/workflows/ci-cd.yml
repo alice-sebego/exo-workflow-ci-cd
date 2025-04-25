@@ -107,7 +107,7 @@ jobs:
       - run: echo "✅ Production deployment done!" >> $GITHUB_STEP_SUMMARY
   
   auto-review:
-    if: github.event_name == 'pull_request' && github.actor == 'ton-username'
+    if: github.event_name == 'pull_request' && github.actor == 'alice-sebego'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
