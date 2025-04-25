@@ -54,7 +54,7 @@ jobs:
       - run: echo "Build success ✅" >> $GITHUB_STEP_SUMMARY
 
   deploy-dev:
-    if: startsWith(github.head_ref, 'feature/')
+    if: github.head_ref != 'main'
     needs: build
     runs-on: ubuntu-latest
     concurrency:
